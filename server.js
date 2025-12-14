@@ -142,6 +142,36 @@ app.get('/api/debug-status', (req, res) => {
     });
 });
 
+// Endpoint para Inicializar Base de Datos (Manual)
+app.get('/api/init-db', (req, res) => {
+    const createPoemsTable = `
+    CREATE TABLE IF NOT EXISTS poems (
+        id SERIAL PRIMARY KEY,
+        title TEXT NOT NULL,
+        content TEXT NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );`;
+
+    const createCommentsTable = `
+    CREATE TABLE IF NOT EXISTS comments (
+        id SERIAL PRIMARY KEY,
+        poem_id INTEGER REFERENCES poems(id),
+        author TEXT NOT NULL,
+        email TEXT,
+        content TEXT NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );`;
+
+    db.query(createPoemsTable, (err) => {
+        if (err) return res.status(500).json({ error: "Error creating poems table", details: err.message });
+
+        db.query(createCommentsTable, (err) => {
+            if (err) return res.status(500).json({ error: "Error creating comments table", details: err.message });
+            res.json({ message: "Tables created successfully!" });
+        });
+    });
+});
+
 // 9. Manejo de Errores y 404 para API
 app.all('/api/{*path}', (req, res) => {
     res.status(404).json({ error: "Endpoint de API no encontrado." });

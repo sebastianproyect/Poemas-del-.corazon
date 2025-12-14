@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Colección de poemas del corazón, sentimientos profundos y escritos llenos de amor y sinceridad. Una antología personal para el alma.">
+    <meta name="keywords" content="poemas, poesía, amor, sentimientos, antología, versos, corazón, escritos personales">
+    <meta name="author" content="Poemas del Corazón">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph / Facebook / WhatsApp -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Poemas del Corazón - Antología Personal">
+    <meta property="og:description"
+        content="Cada palabra un sentimiento de sinceridad que solo el alma logra descifrar.">
+    <meta property="og:image" content="images/hero_books.png">
+
+    <title>Poemas del Corazón - que nacen y sienten con amor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Great+Vibes&family=Montserrat:wght@200;300;400;500&family=Dancing+Script:wght@400;700&family=Parisienne&family=Allura&family=Sacramento&family=Tangerine:wght@400;700&family=Alex+Brush&family=Pinyon+Script&family=Lavishly+Yours&family=Italianno&family=Sevillana&family=Pacifico&family=Kaushan+Script&family=Satisfy&family=Cookie&family=Lobster&family=Amatic+SC:wght@400;700&family=Caveat:wght@400;700&family=Cinzel:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;1,400&family=Libre+Baskerville:ital,wght@0,400;1,400&family=EB+Garamond:ital,wght@0,400;1,400&family=Crimson+Text:ital,wght@0,400;1,400&family=Spectral:ital,wght@0,400;1,400&family=Old+Standard+TT:ital,wght@0,400;1,400&family=Petit+Formal+Script&family=Marck+Script&family=Niconne&family=Rouge+Script&family=Dawning+of+a+New+Day&family=Indie+Flower&family=Shadows+Into+Light&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo">Poemas del Corazón</div>
+        <div class="nav-links">
+            <button onclick="showHome()">Colección</button>
+            <button onclick="showAdminLogin()" id="adminBtn">Autor</button>
+            <button onclick="logout()" id="logoutBtn" style="display: none;">Salir</button>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section id="homeView">
+            <header class="hero">
+                <h1>Poemas del Corazón</h1>
+                <p class="subtitle">"Cada palabra un sentimiento de sinceridad que solo el alma logra descifrar"</p>
+            </header>
+            <div id="poemsList" class="poems-grid">
+                <div class="loading">Cargando colección...</div>
+            </div>
+        </section>
+
+        <section id="poemDetailView" class="hidden">
+            <div class="detail-actions">
+                <button class="back-btn" onclick="showHome()">← Volver</button>
+                <div class="admin-controls hidden" id="adminControls">
+                    <button class="edit-btn" onclick="enableEditMode()">✏️ Editar</button>
+                    <button class="delete-btn" onclick="deleteCurrentPoem()">🗑️ Eliminar</button>
+                </div>
+            </div>
+            <article id="singlePoem" class="poem-detail"></article>
+
+            <div id="editPoemForm" class="hidden edit-container">
+                <h3>✨ Editar Obra</h3>
+                <div id="editPoemTitle" class="rich-title" contenteditable="true" placeholder="Título"></div>
+                <div class="editor-toolbar">
+                    <button type="button" onclick="execCmd('bold')"><b>B</b></button>
+                    <button type="button" onclick="execCmd('italic')"><i>I</i></button>
+                    <button type="button" onclick="execCmd('underline')"><u>U</u></button>
+                    <select onchange="execCmd('fontSize', this.value)">
+                        <option value="">📏 Tamaño</option>
+                        <option value="1">Diminuto</option>
+                        <option value="2">Pequeño</option>
+                        <option value="3">Normal</option>
+                        <option value="4">Mediano</option>
+                        <option value="5">Grande</option>
+                        <option value="6">Muy Grande</option>
+                        <option value="7">Gigante</option>
+                    </select>
+                    <select onchange="execCmd('fontName', this.value)">
+                        <option value="">🖋️ Fuente</option>
+                        <optgroup label="✨ Cursivas">
+                            <option value="Great Vibes">Great Vibes</option>
+                            <option value="Parisienne">Parisienne</option>
+                            <option value="Allura">Allura</option>
+                            <option value="Sacramento">Sacramento</option>
+                            <option value="Tangerine">Tangerine</option>
+                            <option value="Alex Brush">Alex Brush</option>
+                            <option value="Pinyon Script">Pinyon Script</option>
+                            <option value="Italianno">Italianno</option>
+                        </optgroup>
+                        <optgroup label="🎨 Decorativas">
+                            <option value="Dancing Script">Dancing Script</option>
+                            <option value="Pacifico">Pacifico</option>
+                            <option value="Satisfy">Satisfy</option>
+                            <option value="Lobster">Lobster</option>
+                        </optgroup>
+                        <optgroup label="📖 Clásicas">
+                            <option value="Cormorant Garamond">Cormorant Garamond</option>
+                            <option value="Playfair Display">Playfair Display</option>
+                            <option value="Lora">Lora</option>
+                            <option value="EB Garamond">EB Garamond</option>
+                            <option value="Cinzel">Cinzel</option>
+                        </optgroup>
+                    </select>
+                    <select onchange="execCmd('foreColor', this.value)">
+                        <option value="">🎨 Color</option>
+                        <option value="#ffffff">Blanco</option>
+                        <option value="#e6f1ff">Marfil</option>
+                        <option value="#c5a059">Oro</option>
+                        <option value="#d4af37">Dorado</option>
+                        <option value="#8b4513">Bronce</option>
+                        <option value="#dc143c">Carmesí</option>
+                        <option value="#ff6b6b">Coral</option>
+                        <option value="#4169e1">Azul Real</option>
+                        <option value="#9370db">Púrpura</option>
+                        <option value="#228b22">Verde</option>
+                    </select>
+                </div>
+                <div id="editPoemContent" class="rich-editor" contenteditable="true"></div>
+                <div class="edit-buttons">
+                    <button onclick="savePoemChanges()" class="save-btn">💾 Guardar</button>
+                    <button onclick="cancelEdit()" class="cancel-btn">❌ Cancelar</button>
+                </div>
+            </div>
+
+            <div class="comments-section">
+                <h3>💭 Resonancias</h3>
+                <div id="commentsList"></div>
+                <div id="commentRestrictionMsg" class="hidden restriction-msg">Ya has dejado tu huella ✨</div>
+                <form id="commentForm" onsubmit="submitComment(event)">
+                    <div class="form-row">
+                        <input type="email" id="commentEmail" placeholder="Tu Email" required>
+                        <input type="text" id="commentAuthor" placeholder="Tu nombre..." required>
+                    </div>
+                    <textarea id="commentContent" placeholder="Comparte tu sentir..." required></textarea>
+                    <button type="submit" class="comment-btn">Dejar nota</button>
+                    <p class="form-note">* Tu email es privado y solo sirve para evitar spam.</p>
+                </form>
+            </div>
+        </section>
+
+        <section id="adminLoginView" class="hidden">
+            <div class="login-card">
+                <h2>🔐 Identificación</h2>
+                <form onsubmit="handleLogin(event)">
+                    <input type="password" id="adminPassword" placeholder="Clave de Acceso" required>
+                    <button type="submit">Ingresar</button>
+                </form>
+                <p id="loginError" class="error"></p>
+            </div>
+        </section>
+
+        <section id="welcomeView" class="hidden">
+            <div class="welcome-card">
+                <h1 class="welcome-title">BIENVENIDA ALYSON</h1>
+                <p class="welcome-subtitle">AL ESPACIO DONDE TUS EMOCIONES ENCUENTRAN REFUGIO</p>
+                <div class="welcome-decoration">✨ 📝 ✨</div>
+                <button onclick="showCreatePoem()" class="welcome-btn">Comenzar a Crear</button>
+            </div>
+        </section>
+
+        <section id="createPoemView" class="hidden">
+            <header class="admin-header">
+                <h2>✍️ Nueva Composición</h2>
+                <button onclick="showHome()">Descartar</button>
+            </header>
+            <form class="create-form" onsubmit="submitPoem(event)">
+                <div id="newPoemTitle" class="rich-title" contenteditable="true" placeholder="Título de la Obra"></div>
+                <div class="editor-toolbar">
+                    <button type="button" onclick="execCmd('bold')"><b>B</b></button>
+                    <button type="button" onclick="execCmd('italic')"><i>I</i></button>
+                    <button type="button" onclick="execCmd('underline')"><u>U</u></button>
+                    <select onchange="execCmd('fontSize', this.value)">
+                        <option value="">📏 Tamaño</option>
+                        <option value="1">Diminuto</option>
+                        <option value="2">Pequeño</option>
+                        <option value="3">Normal</option>
+                        <option value="4">Mediano</option>
+                        <option value="5">Grande</option>
+                        <option value="6">Muy Grande</option>
+                        <option value="7">Gigante</option>
+                    </select>
+                    <select onchange="execCmd('fontName', this.value)">
+                        <option value="">🖋️ Fuente</option>
+                        <optgroup label="✨ Cursivas Elegantes">
+                            <option value="Great Vibes">Great Vibes</option>
+                            <option value="Parisienne">Parisienne</option>
+                            <option value="Allura">Allura</option>
+                            <option value="Sacramento">Sacramento</option>
+                            <option value="Tangerine">Tangerine</option>
+                            <option value="Alex Brush">Alex Brush</option>
+                            <option value="Pinyon Script">Pinyon Script</option>
+                            <option value="Lavishly Yours">Lavishly Yours</option>
+                            <option value="Italianno">Italianno</option>
+                            <option value="Sevillana">Sevillana</option>
+                            <option value="Petit Formal Script">Petit Formal</option>
+                            <option value="Marck Script">Marck Script</option>
+                            <option value="Niconne">Niconne</option>
+                            <option value="Rouge Script">Rouge Script</option>
+                        </optgroup>
+                        <optgroup label="🎨 Decorativas">
+                            <option value="Dancing Script">Dancing Script</option>
+                            <option value="Pacifico">Pacifico</option>
+                            <option value="Kaushan Script">Kaushan Script</option>
+                            <option value="Satisfy">Satisfy</option>
+                            <option value="Cookie">Cookie</option>
+                            <option value="Lobster">Lobster</option>
+                        </optgroup>
+                        <optgroup label="📝 Manuscritas">
+                            <option value="Caveat">Caveat</option>
+                            <option value="Amatic SC">Amatic SC</option>
+                            <option value="Indie Flower">Indie Flower</option>
+                            <option value="Shadows Into Light">Shadows Into Light</option>
+                        </optgroup>
+                        <optgroup label="📖 Serifas Clásicas">
+                            <option value="Cormorant Garamond">Cormorant Garamond</option>
+                            <option value="Playfair Display">Playfair Display</option>
+                            <option value="Lora">Lora</option>
+                            <option value="Libre Baskerville">Libre Baskerville</option>
+                            <option value="EB Garamond">EB Garamond</option>
+                            <option value="Crimson Text">Crimson Text</option>
+                            <option value="Spectral">Spectral</option>
+                            <option value="Old Standard TT">Old Standard TT</option>
+                            <option value="Cinzel">Cinzel</option>
+                        </optgroup>
+                    </select>
+                    <select onchange="execCmd('foreColor', this.value)">
+                        <option value="">🎨 Color</option>
+                        <optgroup label="🤍 Neutros">
+                            <option value="#ffffff">Blanco</option>
+                            <option value="#e6f1ff">Marfil</option>
+                            <option value="#f5f5dc">Beige</option>
+                            <option value="#808080">Gris</option>
+                            <option value="#000000">Negro</option>
+                        </optgroup>
+                        <optgroup label="✨ Dorados">
+                            <option value="#c5a059">Oro Antiguo</option>
+                            <option value="#d4af37">Oro Metálico</option>
+                            <option value="#ffd700">Oro Brillante</option>
+                            <option value="#8b4513">Bronce</option>
+                            <option value="#b87333">Cobre</option>
+                        </optgroup>
+                        <optgroup label="❤️ Rojos">
+                            <option value="#ff6b6b">Coral</option>
+                            <option value="#dc143c">Carmesí</option>
+                            <option value="#8b0000">Rojo Oscuro</option>
+                            <option value="#ff1493">Rosa</option>
+                        </optgroup>
+                        <optgroup label="💙 Azules">
+                            <option value="#87ceeb">Cielo</option>
+                            <option value="#4169e1">Azul Real</option>
+                            <option value="#000080">Marino</option>
+                            <option value="#40e0d0">Turquesa</option>
+                        </optgroup>
+                        <optgroup label="💜 Púrpuras">
+                            <option value="#e6e6fa">Lavanda</option>
+                            <option value="#9370db">Púrpura</option>
+                            <option value="#4b0082">Índigo</option>
+                        </optgroup>
+                        <optgroup label="💚 Verdes">
+                            <option value="#90ee90">Verde Claro</option>
+                            <option value="#228b22">Bosque</option>
+                            <option value="#808000">Oliva</option>
+                        </optgroup>
+                    </select>
+                    <button type="button" onclick="execCmd('justifyLeft')">⇤</button>
+                    <button type="button" onclick="execCmd('justifyCenter')">↔</button>
+                    <button type="button" onclick="execCmd('justifyRight')">⇥</button>
+                </div>
+                <div id="newPoemContent" class="rich-editor" contenteditable="true"
+                    placeholder="El silencio espera tus palabras..."></div>
+                <button type="submit" class="publish-btn">✨ Publicar Obra</button>
+                <p id="createError" class="error"></p>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 Poemary. Donde las palabras florecen.</p>
+    </footer>
+    <script src="app.js"></script>
+</body>
+
+</html>

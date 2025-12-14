@@ -1,0 +1,1071 @@
+:root {
+    --bg-color: #E6F3FF;
+    /* Azul Nube muy claro */
+    --card-bg: #ffffff;
+    /* Tarjetas blancas/papel */
+    --text-primary: #1a202c;
+    /* Texto oscuro para leer bien */
+    --text-secondary: #4a5568;
+    --accent: #B8860B;
+    /* Oro Oscuro Fuerte */
+    --accent-hover: #d4a017;
+    --danger: #ef5350;
+    --success: #66bb6a;
+
+    --font-heading: 'Cormorant Garamond', serif;
+    --font-body: 'Montserrat', sans-serif;
+    --font-cursive: 'Great Vibes', cursive;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Animaciones Globales */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+/* Decoraciones Flotantes */
+.decoration {
+    position: fixed;
+    pointer-events: none;
+    opacity: 0.15;
+    z-index: 0;
+}
+
+.deco-quill {
+    width: 200px;
+    height: 200px;
+    right: -20px;
+    top: 15%;
+    transform: rotate(25deg);
+    animation: float 6s ease-in-out infinite;
+    color: rgba(197, 160, 89, 0.15);
+    /* Color sutil */
+    z-index: -1;
+}
+
+.deco-ink {
+    width: 120px;
+    height: 120px;
+    left: 2%;
+    bottom: 10%;
+    animation: float 8s ease-in-out infinite reverse;
+    color: rgba(197, 160, 89, 0.1);
+    z-index: -1;
+}
+
+.decoration svg {
+    filter: drop-shadow(0 0 5px rgba(197, 160, 89, 0.2));
+}
+
+/* Formulario Comentarios */
+.form-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.form-row input {
+    flex: 1;
+}
+
+.form-note {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin-top: 0.5rem;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+}
+
+/* Título Editable Rico */
+.rich-title {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    color: var(--accent);
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid rgba(197, 160, 89, 0.3);
+    padding: 0.5rem 0;
+    margin-bottom: 1rem;
+    outline: none;
+    min-height: 2.5rem;
+}
+
+.rich-title:empty:before {
+    content: attr(placeholder);
+    color: rgba(197, 160, 89, 0.4);
+}
+
+.rich-title:focus {
+    border-bottom-color: var(--accent);
+}
+
+@keyframes glow {
+
+    0%,
+    100% {
+        text-shadow: 0 0 20px rgba(197, 160, 89, 0.5);
+    }
+
+    50% {
+        text-shadow: 0 0 40px rgba(197, 160, 89, 0.8), 0 0 60px rgba(197, 160, 89, 0.4);
+    }
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.poem-card,
+.poem-detail,
+.comment {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Tarjeta de Bienvenida Alyson */
+.welcome-card {
+    text-align: center;
+    padding: 5rem 2rem;
+    max-width: 800px;
+    margin: 10vh auto;
+    background: linear-gradient(135deg, rgba(17, 34, 64, 0.9), rgba(10, 25, 47, 0.95));
+    border: 2px solid var(--accent);
+    border-radius: 12px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), 0 0 100px rgba(197, 160, 89, 0.1);
+    animation: fadeIn 0.8s ease-out;
+}
+
+.welcome-title {
+    font-family: var(--font-heading);
+    font-size: 3rem;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    letter-spacing: 0.15em;
+    animation: glow 3s ease-in-out infinite;
+    text-transform: uppercase;
+}
+
+.welcome-subtitle {
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    color: var(--text-primary);
+    margin-bottom: 2rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.9;
+}
+
+.welcome-decoration {
+    font-size: 2rem;
+    margin-bottom: 3rem;
+    animation: float 3s ease-in-out infinite;
+}
+
+.welcome-btn {
+    background: var(--accent);
+    color: var(--bg-color);
+    border: none;
+    padding: 1.2rem 3rem;
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    cursor: pointer;
+    transition: all 0.3s;
+    border-radius: 4px;
+}
+
+.welcome-btn:hover {
+    background: var(--accent-hover);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(197, 160, 89, 0.3);
+}
+
+.poem-card,
+.poem-detail,
+.comment {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Navbar */
+.navbar {
+    padding: 2rem 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: transparent;
+    /* Clean look */
+}
+
+.logo {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.nav-links button {
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-secondary);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+    margin-left: 2rem;
+    transition: all 0.3s;
+}
+
+.nav-links button:hover {
+    color: var(--accent);
+    border-bottom: 1px solid var(--accent);
+}
+
+/* Hero */
+.hero {
+    text-align: center;
+    padding: 8rem 1rem;
+    /* More vertical space */
+    border-bottom: 2px solid var(--accent);
+    margin-bottom: 4rem;
+    background-image: linear-gradient(rgba(10, 25, 47, 0.8), rgba(10, 25, 47, 0.9)), url('images/hero_books.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    position: relative;
+    z-index: 5;
+}
+
+/* Decoration */
+body::before {
+    content: '';
+    position: fixed;
+    top: 50%;
+    right: -10%;
+    width: 600px;
+    height: 600px;
+    background-image: url('images/ink_decoration.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.15;
+    pointer-events: none;
+    z-index: -1;
+    transform: rotate(-15deg);
+}
+
+/* Decoration */
+body::before {
+    content: '';
+    position: fixed;
+    top: 50%;
+    right: -10%;
+    width: 600px;
+    height: 600px;
+    background-image: url('images/ink_decoration.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.15;
+    pointer-events: none;
+    z-index: -1;
+    transform: rotate(-15deg);
+}
+
+.hero h1 {
+    font-family: var(--font-heading);
+    font-size: 5rem;
+    font-weight: 700;
+    /* Más grueso */
+    color: var(--accent);
+    /* Dorado fuerte */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    margin-bottom: 1rem;
+    line-height: 1;
+}
+
+.subtitle {
+    font-family: var(--font-cursive);
+    font-size: 2.5rem;
+    color: var(--accent);
+    opacity: 0.9;
+}
+
+/* Grid */
+.container {
+    max-width: 1400px;
+    /* Wider layout */
+    margin: 0 auto;
+    padding: 0 5% 5rem;
+    flex: 1;
+}
+
+.poems-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 3rem;
+}
+
+h2,
+h3 {
+    font-family: var(--font-heading);
+    color: var(--accent);
+    margin-bottom: 1rem;
+}
+
+.poem-card {
+    background: linear-gradient(135deg,
+            #f5f0e1 0%,
+            #e8dcc4 25%,
+            #f0e6d2 50%,
+            #d4c4a8 75%,
+            #c9b896 100%);
+    padding: 2.5rem 2rem;
+    border-radius: 3px;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    cursor: pointer;
+    position: relative;
+    border: none;
+    box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.3),
+        inset 0 0 60px rgba(139, 90, 43, 0.15);
+
+    /* Efecto de bordes quemados/envejecidos */
+    border-image: linear-gradient(to bottom,
+            rgba(139, 90, 43, 0.4) 0%,
+            rgba(101, 67, 33, 0.2) 50%,
+            rgba(139, 90, 43, 0.4) 100%) 1;
+}
+
+.poem-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+        radial-gradient(ellipse at top left, rgba(139, 90, 43, 0.1) 0%, transparent 50%),
+        radial-gradient(ellipse at bottom right, rgba(101, 67, 33, 0.15) 0%, transparent 50%);
+    pointer-events: none;
+    border-radius: 3px;
+}
+
+.poem-card:hover {
+    transform: translateY(-8px) rotate(-0.5deg);
+    box-shadow:
+        0 25px 50px rgba(0, 0, 0, 0.4),
+        inset 0 0 80px rgba(139, 90, 43, 0.2);
+}
+
+.poem-card h2 {
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #3d2914;
+    margin-bottom: 1rem;
+    line-height: 1.3;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.3);
+    position: relative;
+    z-index: 1;
+}
+
+.poem-preview {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    color: #5c4a32;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-style: italic;
+    position: relative;
+    z-index: 1;
+}
+
+.poem-date {
+    display: block;
+    text-align: right;
+    font-size: 0.75rem;
+    color: #8b5a2b;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: auto;
+    font-weight: 500;
+    position: relative;
+    z-index: 1;
+}
+
+/* Detail View */
+.detail-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
+.back-btn,
+.delete-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    transition: color 0.3s;
+}
+
+.back-btn:hover {
+    color: var(--accent);
+}
+
+.delete-btn {
+    color: var(--danger);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.delete-btn:hover {
+    text-decoration: underline;
+}
+
+.poem-detail {
+    max-width: 900px;
+    margin: 0 auto 6rem;
+    text-align: center;
+}
+
+.poem-detail h1 {
+    font-family: var(--font-heading);
+    font-size: 4rem;
+    color: var(--accent);
+    margin-bottom: 4rem;
+    font-weight: 400;
+}
+
+.poem-detail .content {
+    font-family: var(--font-heading);
+    font-size: 1.6rem;
+    line-height: 2;
+    color: var(--text-primary);
+    white-space: pre-wrap;
+    text-align: left;
+    /* Editor's choice usually works best left aligned or centered depending on poem */
+}
+
+/* Comments */
+.comments-section {
+    max-width: 700px;
+    margin: 0 auto;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 3rem;
+}
+
+.comments-section h3 {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.comment {
+    margin-bottom: 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 1rem;
+}
+
+.comment-author {
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.comment-content {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    font-style: italic;
+}
+
+#commentForm {
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+input,
+textarea,
+.rich-editor {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    padding: 1rem;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    border-radius: 2px;
+}
+
+input:focus,
+textarea:focus,
+.rich-editor:focus {
+    outline: none;
+    border-color: var(--accent);
+}
+
+.rich-editor {
+    min-height: 400px;
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    color: var(--text-primary);
+}
+
+.comment-btn,
+.publish-btn,
+.login-card button {
+    background: var(--accent);
+    color: var(--bg-color);
+    border: none;
+    padding: 1rem 2rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: background 0.3s;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+}
+
+.comment-btn:hover,
+.publish-btn:hover,
+.login-card button:hover {
+    background: var(--accent-hover);
+}
+
+/* Admin Editor Toolbar */
+.editor-toolbar {
+    background: #1a2f4d;
+    padding: 0.8rem;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: none;
+}
+
+.editor-toolbar button,
+.editor-toolbar select {
+    background: var(--bg-color);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-secondary);
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+.editor-toolbar button:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
+/* Utils */
+.hidden {
+    display: none !important;
+}
+
+.error {
+    color: var(--danger);
+    margin-top: 1rem;
+    text-align: center;
+}
+
+/* Admin Controls */
+.admin-controls {
+    display: flex;
+    gap: 1rem;
+}
+
+.edit-btn,
+.delete-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s;
+}
+
+.edit-btn {
+    color: var(--accent);
+}
+
+.edit-btn:hover {
+    color: var(--text-primary);
+    text-decoration: underline;
+}
+
+.delete-btn {
+    color: var(--danger);
+}
+
+.delete-btn:hover {
+    background: rgba(239, 83, 80, 0.1);
+}
+
+/* Edit Container */
+.edit-container {
+    background: rgba(17, 34, 64, 0.98);
+    padding: 2rem;
+    border: 2px solid var(--accent);
+    border-radius: 8px;
+    margin-bottom: 3rem;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.3s ease-out;
+}
+
+.edit-container h3 {
+    font-family: var(--font-heading);
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+}
+
+.edit-input {
+    width: 100%;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    font-family: var(--font-heading);
+    color: var(--accent);
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid rgba(197, 160, 89, 0.3);
+    padding: 0.5rem 0;
+}
+
+.edit-input:focus {
+    outline: none;
+    border-bottom-color: var(--accent);
+}
+
+.edit-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    justify-content: flex-end;
+}
+
+.save-btn {
+    background: var(--accent);
+    color: var(--bg-color);
+    border: none;
+    padding: 0.8rem 1.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.save-btn:hover {
+    background: var(--accent-hover);
+    transform: translateY(-2px);
+}
+
+.cancel-btn {
+    background: transparent;
+    border: 1px solid var(--text-secondary);
+    color: var(--text-secondary);
+    padding: 0.8rem 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.cancel-btn:hover {
+    border-color: var(--text-primary);
+    color: var(--text-primary);
+}
+
+/* Comment Management */
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.delete-comment-btn {
+    background: transparent;
+    color: var(--danger);
+    border: none;
+    font-size: 1.4rem;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0 0.5rem;
+    opacity: 0.7;
+    transition: all 0.2s;
+}
+
+.delete-comment-btn:hover {
+    opacity: 1;
+    color: #ff0000;
+    transform: scale(1.2);
+}
+
+
+
+/* Restriction Message */
+.restriction-msg {
+    text-align: center;
+    color: var(--accent);
+    margin: 2rem 0;
+    font-style: italic;
+    padding: 1rem;
+    background: rgba(197, 160, 89, 0.1);
+    border-radius: 4px;
+}
+
+/* Loading State */
+.loading {
+    text-align: center;
+    color: var(--text-secondary);
+    padding: 3rem;
+    font-style: italic;
+}
+
+/* Responsive */
+/* Admin Actions */
+.admin-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.edit-btn {
+    color: var(--accent);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.edit-btn:hover {
+    text-decoration: underline;
+    color: var(--text-primary);
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.delete-comment-btn {
+    background: transparent;
+    color: var(--danger);
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0 0.5rem;
+}
+
+.delete-comment-btn:hover {
+    color: #ff0000;
+}
+
+/* Editor de Edición Style */
+.edit-container {
+    background: rgba(17, 34, 64, 0.95);
+    padding: 2rem;
+    border: 1px solid var(--accent);
+    margin-bottom: 3rem;
+    border-radius: 4px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.edit-input {
+    width: 100%;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    font-family: var(--font-heading);
+    color: var(--accent);
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(197, 160, 89, 0.3);
+}
+
+.edit-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    justify-content: flex-end;
+}
+
+.save-btn {
+    background: var(--accent);
+    color: var(--bg-color);
+}
+
+.cancel-btn {
+    background: transparent;
+    border: 1px solid var(--text-secondary);
+    color: var(--text-secondary);
+}
+
+.cancel-btn:hover {
+    border-color: var(--text-primary);
+    color: var(--text-primary);
+    background: transparent;
+}
+
+
+/* Responsive & Mobile Perfection */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 1rem 2rem;
+    }
+
+    .hero {
+        padding: 4rem 1rem;
+        background-attachment: scroll;
+    }
+
+    .hero h1 {
+        font-size: 2.5rem;
+        line-height: 1.1;
+    }
+
+    .subtitle {
+        font-size: 1.3rem;
+        margin-top: 0.5rem;
+    }
+
+    .navbar {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+    }
+
+    .logo {
+        font-size: 1.5rem;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .nav-links button {
+        margin-left: 0;
+        font-size: 0.75rem;
+        padding: 0.5rem;
+    }
+
+    .poems-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .poem-card {
+        padding: 1.5rem;
+    }
+
+    .poem-card h2 {
+        font-size: 1.4rem;
+    }
+
+    .poem-preview {
+        font-size: 1rem;
+    }
+
+    .poem-detail h1 {
+        font-size: 2rem;
+        line-height: 1.2;
+        margin-bottom: 2rem;
+    }
+
+    .poem-detail .content {
+        font-size: 1.1rem;
+        line-height: 1.7;
+        padding: 0;
+    }
+
+    .detail-actions {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: flex-start;
+    }
+
+    .admin-controls {
+        flex-wrap: wrap;
+    }
+
+    /* Toolbar Móvil - Scrollable horizontal */
+    .editor-toolbar {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding: 0.5rem;
+        gap: 5px;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .editor-toolbar select {
+        min-width: 100px;
+        font-size: 0.75rem;
+        padding: 5px;
+    }
+
+    .editor-toolbar button {
+        min-width: 32px;
+        padding: 5px 8px;
+    }
+
+    .rich-editor {
+        min-height: 250px;
+        font-size: 1.1rem;
+        padding: 1rem;
+    }
+
+    .edit-container {
+        padding: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .edit-input {
+        font-size: 1.2rem;
+    }
+
+    .edit-buttons {
+        flex-direction: column;
+    }
+
+    .save-btn,
+    .cancel-btn {
+        width: 100%;
+        text-align: center;
+        padding: 1rem;
+    }
+
+    .comments-section {
+        padding-top: 2rem;
+    }
+
+    .comments-section h3 {
+        font-size: 1.5rem;
+    }
+
+    .login-card {
+        padding: 2rem 1.5rem;
+        margin: 10vh 1rem;
+    }
+
+    .welcome-card {
+        padding: 3rem 1.5rem;
+        margin: 5vh 1rem;
+    }
+
+    .welcome-title {
+        font-size: 2rem;
+        letter-spacing: 0.1em;
+    }
+
+    .welcome-subtitle {
+        font-size: 1rem;
+    }
+
+    .publish-btn,
+    .comment-btn {
+        width: 100%;
+        padding: 1rem;
+    }
+}
+
+/* Tablets */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .poems-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
+
+    .hero h1 {
+        font-size: 4rem;
+    }
+
+    .poem-detail h1 {
+        font-size: 3rem;
+    }
+}
+
+/* Large Screens */
+@media (min-width: 1400px) {
+    .container {
+        max-width: 1600px;
+    }
+
+    .poems-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Footer Animado */
+footer {
+    text-align: center;
+    padding: 4rem 2rem 2rem;
+    color: rgba(255, 255, 255, 0.2);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background: linear-gradient(to top, var(--bg-color), transparent);
+}
